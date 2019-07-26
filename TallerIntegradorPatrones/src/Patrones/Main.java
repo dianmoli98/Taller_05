@@ -5,10 +5,22 @@
  */
 package Patrones;
 
+import Adapter.CuentaAdapter;
+import java.util.Currency;
+import java.util.Locale;
+
 public class Main
-{
+{;
     public static void main(String[] args)
     {
+        
+        /*
+        CuentaAdapter ca = new CuentaAdapter(2, 100);
+        System.out.println(ca.Balance());
+        ca.Retirar(10);
+        System.out.println(ca.Balance());
+        System.out.println(ca.Depositar(2, 100));
+        System.out.println(ca.Balance());*/
         // Crear un único cajero Automático de dólares con 100 billetes de 20, 100 de 10, 
         // 10 monedas de 0.50, 10 de 0.25 y 1000 de 0.05
 
@@ -17,6 +29,8 @@ public class Main
         // Menú principal para seleccionar una de las 10 cuentas solo con el id
         
         // Mostrar el menú para realizar transacciones en el cajero automático
+        
+        System.out.println();
     }
 
     

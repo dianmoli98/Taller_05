@@ -44,7 +44,7 @@ public class AtmEC {
 
     // -----------------
     public boolean sacarDinero(double dinero) { 
-        this.dinero -= dinero;
+        AtmEC.dinero -= dinero;
         //ver esto.
         return manejador.retirar(dinero);
         
@@ -53,14 +53,14 @@ public class AtmEC {
     
     // -----------------
     public double getTotal() {
-        return this.dinero;
+        return AtmEC.dinero;
     }
 
     
 
     // -----------------
     public void ingresarDinero(double dinero, int denominacion) {
-        this.dinero += dinero;
+        AtmEC.dinero += dinero;
         //ver esto
         manejador.depositar(denominacion, (int) dinero);
         // Todo: Sólo se puede depositar billetes de una sola denominación y agregarse al manejador correspondiente
@@ -145,13 +145,17 @@ public class AtmEC {
     public static void anotherTransaction(CuentaAdapter cuenta){
         System.out.println("Do you want another transaction?\n\n Press 1 for another transaction\n2 To exit");
         int anotherTransaction = in.nextInt();
-        if(anotherTransaction == 1){
-            transaction(cuenta); // call transaction method
-        } else if(anotherTransaction == 2){
-            System.out.println("Thanks for choosing us. Good Bye!");
-        } else {
-            System.out.println("Invalid choice\n\n");
-            anotherTransaction(cuenta);
+        switch (anotherTransaction) {
+            case 1:
+                transaction(cuenta); // call transaction method
+                break;
+            case 2:
+                System.out.println("Thanks for choosing us. Good Bye!");
+                break;
+            default:
+                System.out.println("Invalid choice\n\n");
+                anotherTransaction(cuenta);
+                break;
         }
     }
 

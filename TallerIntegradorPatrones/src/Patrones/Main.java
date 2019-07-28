@@ -7,6 +7,7 @@ package Patrones;
 
 import Adapter.CuentaAdapter;
 import ChainOfResponsibility.Manejador;
+import ChainOfResponsibility.ManejadorDinero;
 import Singleton.AtmEC;
 import java.util.Currency;
 import java.util.Locale;
@@ -15,11 +16,11 @@ public class Main
 {;
     public static void main(String[] args)
     {
-        Manejador manejador20=new Manejador(100,20);
-        Manejador manejador10=new Manejador(100,10);
-        Manejador moneda050=new Manejador(10,0.50);
-        Manejador moneda025=new Manejador(10,0.25);
-        Manejador moneda005= new Manejador(1000,0.05);
+        Manejador manejador20=new ManejadorDinero(100,20.0);
+        Manejador manejador10=new ManejadorDinero(100,10.0);
+        Manejador moneda050=new ManejadorDinero(10,0.50);
+        Manejador moneda025=new ManejadorDinero(10,0.25);
+        Manejador moneda005= new ManejadorDinero(1000,0.05);
         AtmEC atm=AtmEC.getInstancia();
         atm.addManejador(moneda005);
         atm.addManejador(moneda025);

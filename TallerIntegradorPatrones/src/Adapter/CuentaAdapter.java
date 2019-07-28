@@ -19,15 +19,13 @@ public class CuentaAdapter implements Cuenta {
         return cuenta.getAmount();
     }
 
+    @Override
     public boolean Retirar(double monto) {
         String valor[] = cuenta.withdraw(monto).split(" ");
-        if (Double.parseDouble(valor[1]) >= 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return Double.parseDouble(valor[1]) >= 0;
     }
 
+    @Override
     public boolean Depositar(int n, double monto) {
         double total = n * monto;
         if (total > 0) {

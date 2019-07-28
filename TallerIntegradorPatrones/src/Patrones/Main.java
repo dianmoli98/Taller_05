@@ -5,11 +5,14 @@
  */
 package Patrones;
 
+import Adapter.Cuenta;
 import Adapter.CuentaAdapter;
 import ChainOfResponsibility.Manejador;
 import ChainOfResponsibility.ManejadorDinero;
 import Singleton.AtmEC;
 import java.util.Currency;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -19,6 +22,7 @@ public class Main
     {
         // Crear un único cajero Automático de dólares con 100 billetes de 20, 100 de 10, 
         // 10 monedas de 0.50, 10 de 0.25 y 1000 de 0.05
+        List<CuentaAdapter> lista=new LinkedList<>();
         Manejador manejador20=new ManejadorDinero(100,20.0);
         Manejador manejador10=new ManejadorDinero(100,10.0);
         Manejador moneda050=new ManejadorDinero(10,0.50);
@@ -30,7 +34,6 @@ public class Main
         atm.addManejador(moneda050);
         atm.addManejador(manejador20);
         atm.addManejador(manejador10);
-        CuentaAdapter ca = new CuentaAdapter(2, 100);
         
         // Crear 10 cuentas nuevas en dólares locale.US con un saldo inicial entre 100.00 y 1000.00 USD cada una.
         CuentaAdapter cuenta1 = new CuentaAdapter(1, 100);
@@ -43,22 +46,25 @@ public class Main
         CuentaAdapter cuenta8 = new CuentaAdapter(8, 200);
         CuentaAdapter cuenta9 =new CuentaAdapter(9, 850);
         CuentaAdapter cuenta10 = new CuentaAdapter(10, 320);
+        lista.add(cuenta1);
+        lista.add(cuenta2);
+        lista.add(cuenta3);
+        lista.add(cuenta4);
+        lista.add(cuenta5);
+        lista.add(cuenta6);
+        lista.add(cuenta7);
+        lista.add(cuenta8);
+        lista.add(cuenta9);
+        lista.add(cuenta10);
         
-        // Mostrar el menú para realizar transacciones en el cajero automático */
-        AtmEC.transaction(ca);
-        System.out.println();
-        
-        
-        // Menú principal para seleccionar una de las 10 cuentas solo con el id
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el id de su cuenta:");
         int ingreso=sc.nextInt();
-        System.out.println(ca.Balance());
-        ca.Retirar(10);
-        System.out.println(ca.Balance());
-        System.out.println(ca.Depositar(2, 100));
-        System.out.println(ca.Balance());
-        
+        for(CuentaAdapter cuenta: lista){
+            if(cuenta.getCuenta().getId()==ingreso){
+                AtmEC.transaction(cuenta);
+            }
+        }
     }
 
     

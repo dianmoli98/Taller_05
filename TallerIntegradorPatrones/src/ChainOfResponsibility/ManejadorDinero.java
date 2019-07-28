@@ -29,11 +29,15 @@ public class ManejadorDinero implements Manejador
 
     @Override
     public boolean retirar(double monto) {
+        if(cantidad*denominacion>monto){
+            cantidad-=(int)(monto/denominacion);
+        }
        return false;
     }
 
     @Override
-    public boolean depositar(int cantidad, int denominacion) {
+    public boolean depositar(double cant, double denominacion) {
+        cantidad+=cant;
         return false;
     }
 

@@ -14,7 +14,7 @@ import java.util.Currency;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class AtmEC {
+    public class AtmEC {
     private static AtmEC instance=null;
     private static Currency moneda=null;
     private static double dinero = 3057.5;
@@ -46,10 +46,8 @@ public class AtmEC {
         if(dinero>=amount){
            while(contador<amount){
                for(Manejador manejadores: manejadores){
-                   if(manejadores.getDenominacion()*manejadores.getCantidad()>contador){
-                    contador+=manejadores.getDenominacion();
-                    manejadores.setCantidad(manejadores.getCantidad()-1);
-             }
+                   manejadores.retirar(amount);
+                   contador+=amount;
            } 
         }
         }else{
@@ -66,7 +64,7 @@ public class AtmEC {
     public void ingresarDinero(double amount, double denominacion) {
         for(Manejador manejadores: manejadores){
             if(manejadores.getDenominacion()==denominacion){
-                manejadores.setCantidad((int) (manejadores.getCantidad()+(amount/denominacion)));
+                manejadores.depositar(amount,denominacion);
             }
         
         }
@@ -165,6 +163,4 @@ public class AtmEC {
                 break;
         }
     }
-
-    
 }

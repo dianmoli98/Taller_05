@@ -44,14 +44,18 @@ public class AtmEC {
     public boolean sacarDinero(double amount) { 
         int contador=0;
         if(dinero>=amount){
-        for(Manejador manejadores: manejadores){
-            if(manejadores.getDenominacion()*manejadores.getCantidad()>contador){
-               contador+=manejadores.getDenominacion();
-               manejadores.setCantidad(manejadores.getCantidad()-1);
-            }
+           while(contador<amount){
+               for(Manejador manejadores: manejadores){
+                   if(manejadores.getDenominacion()*manejadores.getCantidad()>contador){
+                    contador+=manejadores.getDenominacion();
+                    manejadores.setCantidad(manejadores.getCantidad()-1);
+             }
+           } 
         }
+        }else{
+            System.out.println("Insufficient funds at our ATM, Sorry.. Try later ");
         }
-        dinero -= amount;
+        dinero =dinero - amount;
         return true;
     }
     
@@ -64,9 +68,9 @@ public class AtmEC {
             if(manejadores.getDenominacion()==denominacion){
                 manejadores.setCantidad((int) (manejadores.getCantidad()+(amount/denominacion)));
             }
-        dinero += amount;
+        
         }
-    
+    dinero += amount;
     }
 
     public void addManejador(Manejador m){

@@ -36,4 +36,12 @@ public class CuentaAdapter implements Cuenta {
         }else
             return false;
     }
+
+    public Account getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(Account cuenta) {
+        this.cuenta = cuenta;
+    }
 }

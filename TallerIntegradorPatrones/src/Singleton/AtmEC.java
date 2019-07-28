@@ -18,7 +18,6 @@ public class AtmEC {
     private static AtmEC instance=null;
     private static Currency moneda=null;
     private static double dinero = 3057.5;
-    private Manejador manejador;
     private Cuenta cuenta;
     static Scanner in;
     protected static ArrayList <Manejador> manejadores;
@@ -41,29 +40,32 @@ public class AtmEC {
         }
         return instance;
     }
-
-    // -----------------
-    public boolean sacarDinero(double dinero) { 
-        AtmEC.dinero -= dinero;
-        //ver esto.
-        return manejador.retirar(dinero);
-        
+    
+    public boolean sacarDinero(double amount) { 
+        int contador=0;
+        if(dinero>=amount){
+        for(Manejador manejadores: manejadores){
+            if(manejadores.getDenominacion()*manejadores.getCantidad()>contador){
+               contador+=manejadores.getDenominacion();
+               manejadores.setCantidad(manejadores.getCantidad()-1);
+            }
+        }
+        }
+        dinero -= amount;
+        return true;
     }
     
-    
-    // -----------------
-    public double getTotal() {
-        return AtmEC.dinero;
+    public static double getTotal() {
+        return dinero;
     }
-
     
-
-    // -----------------
-    public void ingresarDinero(double dinero, int denominacion) {
-        AtmEC.dinero += dinero;
-        //ver esto
-        manejador.depositar(denominacion, (int) dinero);
-        // Todo: Sólo se puede depositar billetes de una sola denominación y agregarse al manejador correspondiente
+    public void ingresarDinero(double amount, double denominacion) {
+        for(Manejador manejadores: manejadores){
+            if(manejadores.getDenominacion()==denominacion){
+                manejadores.setCantidad((int) (manejadores.getCantidad()+(amount/denominacion)));
+            }
+        dinero += amount;
+        }
     
     }
 
@@ -96,15 +98,16 @@ public class AtmEC {
                     System.out.println("You have insufficient funds\n\n"); 
                     anotherTransaction(cuenta); // ask if they want another transaction
                 } else {
-                    if(dinero>=amount){
-                        cuenta.getCuenta().withdraw(dinero);
+                    if(amount<=cuenta.getCuenta().getAmount()){
+                        cuenta.getCuenta().withdraw(amount);
                         instance.sacarDinero(amount);
+                        System.out.println("You have withdrawn "+amount+" and your new balance is "+cuenta.Balance());
                         anotherTransaction(cuenta); 
                     }
                     // Todo: verificar que se puede realizar el retiro del atm
                     // Todo: actualizar tanto la cuenta como el atm y de los manejadores
                     // Todo: Mostrar resumen de transacción o error
-                    System.out.println("You have withdrawn "+amount+" and your new balance is "+cuenta.Balance());
+                    
                 }
             break; 
             case 2:
@@ -117,7 +120,7 @@ public class AtmEC {
                     denomination=in.nextInt();
                     for(Manejador manejador: manejadores){
                         if(manejador.getDenominacion()==denomination){
-                           instance.ingresarDinero(deposit, denomination);
+                            instance.ingresarDinero(deposit, denomination);
                             cuenta.getCuenta().deposit(deposit);
                             System.out.println("You have withdrawn "+deposit+" and your new balance is "+cuenta.Balance());
                             anotherTransaction(cuenta); 
@@ -133,7 +136,7 @@ public class AtmEC {
             break;
             case 4:
                     // Todo: mostrar el balance del ATM con los billetes en cada manejador
-                    System.out.println("The ATM's balance according with our system is :" +instance.getTotal());
+                    System.out.println("The ATM's balance according with our system is :" +getTotal());
                     anotherTransaction(cuenta); 
             break;
             default:
